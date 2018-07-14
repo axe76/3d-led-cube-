@@ -1,0 +1,153 @@
+int layer[4]= {A3,A2,A1,A0};
+int column[16]={13,12,11,10,9,8,7,6,5,4,3,2,1,0,A5,A4};
+
+
+void setup() {
+  // put your setup code here, to run once:
+  for (int i=0;i<4;i++)
+  {
+    pinMode(layer[i],OUTPUT);
+  }
+  for (int i=0;i<16;i++)
+  {
+    pinMode(column[i],OUTPUT);
+  }
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+everythingOn();
+delay(150);
+everythingOff();
+delay(150);
+flicker();
+delay(150);
+OffAndOnlayerwise();
+delay(150);
+OffAndOncolumnwise();
+delay(150);
+rotate();
+delay(150);
+}
+
+//patterns:-
+void everythingOn()
+{
+  for(int i=0;i<4;i++)
+  {
+    digitalWrite(layer[i], 1);
+  }
+  for(int i=0;i<16;i++)
+  {
+    digitalWrite(column[i],0);
+  }
+}
+
+void everythingOff()
+{
+  for(int i=0;i<4;i++)
+  {
+    digitalWrite(layer[i],0);
+  }
+  for(int i=0;i<16;i++)
+  {
+    digitalWrite(column[i],1);
+  }
+}
+
+void flicker()
+{
+  int i=150;
+  while(i!=0)
+  {
+    everythingOn();
+    delay(i);
+    everythingOff();
+    delay(i);
+    i-=5; 
+  }
+}
+
+void OffAndOnlayerwise()
+{
+  int x=75;
+  for(int i=4;i!=0;i--)
+  {
+    everythingOn();
+    for(int j=0;j<4;j++)
+    {
+      digitalWrite(layer[j],0);
+      delay(x);
+    }
+    for(int j=0;j<4;j++)
+    {
+      digitalWrite(layer[j],1);
+      delay(x);
+    }
+  }
+}
+
+void OffAndOncolumnwise()
+{
+  int x=75;
+  for(int i=4;i!=0;i--)
+  {
+    for(int j=0;j<4;j++)
+    {
+      digitalWrite(layer[j],1);
+    }
+    for(int j=0;j<16;j++)
+    {
+      digitalWrite(column[j],1);
+      delay(x);
+    }
+    for(int j=0;j<16;j++)
+    {
+      digitalWrite(column[j],0);
+      delay(x);
+    }
+  }
+}
+
+void columnOff()
+{
+  for(int i=0;i<16;i++)
+  {
+    digitalWrite(column[i],1);
+  }
+}
+
+void rotate()
+{
+  int x=75;
+  for (int i=0;i<4;i++)
+  { 
+    for(int j=0;j<4;j++)
+    {
+      digitalWrite(layer[j],1);
+      delay(x);
+    }
+    columnOff();
+    delay(x);
+    digitalWrite(column[4],0);digitalWrite(column[14],0);digitalWrite(column[16],0);digitalWrite(column[10],0);
+    delay(x);
+    digitalWrite(column[4],1);digitalWrite(column[14],1);digitalWrite(column[16],1);digitalWrite(column[10],1);
+    digitalWrite(column[5],0);digitalWrite(column[14],0);digitalWrite(column[16],0);digitalWrite(column[11],0);
+    delay(x);
+    digitalWrite(column[5],1);digitalWrite(column[14],1);digitalWrite(column[16],1);digitalWrite(column[11],1);
+    digitalWrite(column[6],0);digitalWrite(column[15],0);digitalWrite(column[13],0);digitalWrite(column[12],0);
+    delay(x);
+    digitalWrite(column[6],1);digitalWrite(column[15],1);digitalWrite(column[13],1);digitalWrite(column[12],1);
+    digitalWrite(column[7],0);digitalWrite(column[15],0);digitalWrite(column[13],0);digitalWrite(column[1],0);
+    delay(x);
+    digitalWrite(column[7],1);digitalWrite(column[15],1);digitalWrite(column[13],1);digitalWrite(column[1],1);
+    digitalWrite(column[8],0);digitalWrite(column[15],0);digitalWrite(column[13],0);digitalWrite(column[2],0);
+    delay(x);
+    digitalWrite(column[8],1);digitalWrite(column[15],1);digitalWrite(column[13],1);digitalWrite(column[2],1);
+    digitalWrite(column[9],0);digitalWrite(column[16],0);digitalWrite(column[14],0);digitalWrite(column[3],0);
+    delay(x);
+    digitalWrite(column[9],1);digitalWrite(column[16],1);digitalWrite(column[14],1);digitalWrite(column[3],1);  
+  }
+  
+}
